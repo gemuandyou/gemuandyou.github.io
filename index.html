@@ -7,6 +7,7 @@
 <body>
 <h1>穷的只能穿6分裤了。T.T</h1>
 <button onclick="getGeo()">获取定位</button>
+<p class="geo-info"></p>
 <script type="application/javascript">
     let baiduGeoUrl = "https://api.map.baidu.com/geocoder/v2/?location={latitude},{longitude}&output=json&ak=WEc8RlPXzSifaq9RHxE1WW7lRKgbid6Y";
     const getGeo = function () {
@@ -27,7 +28,7 @@
                     const resp = httpRequest.responseText;//获取到json字符串，还需解析
                     console.log(resp);
                     if (resp.status === 0) {
-                        alert(resp.result.formatted_address);
+                        document.getElementsByClassName("geo-info")[0].innerText = resp.result.formatted_address;
                     }
                 }
             };
