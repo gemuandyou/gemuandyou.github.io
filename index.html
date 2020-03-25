@@ -6,5 +6,38 @@
 </head>
 <body>
 <h1>穷的只能穿6分裤了。T.T</h1>
+<button onclick="getGeo()">获取定位</button>
+<script type="application/javascript">
+    let baiduGeoUrl = "http://api.map.baidu.com/geocoder/v2/?location={latitude},{longitude}&output=json&ak=WEc8RlPXzSifaq9RHxE1WW7lRKgbid6Y";
+    const getGeo = function () {
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
+        function success(pos) {
+            const crd = pos.coords;
+            console.log(crd);
+            baiduGeoUrl = baiduGeoUrl.replace('{latitude}', crd.latitude).replace('{longitude}', crd.longitude);
+            const httpRequest = new XMLHttpRequest();
+            httpRequest.open('GET', baiduGeoUrl, true);
+            httpRequest.send();
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                    const resp = httpRequest.responseText;//获取到json字符串，还需解析
+                    console.log(resp);
+                    if (resp.status === 0) {
+                        alert(resp.result.formatted_address);
+                    }
+                }
+            };
+        };
+        function error(err) {
+            console.warn('ERROR(' + err.code + '): ' + err.message);
+            alert("ERROR:" + err.message);
+        };
+        navigator.geolocation.getCurrentPosition(success, error, options);
+    };
+</script>
 </body>
 </html>
