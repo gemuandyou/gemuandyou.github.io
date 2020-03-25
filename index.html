@@ -25,9 +25,10 @@
             httpRequest.send();
             httpRequest.onreadystatechange = function () {
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-                    const resp = httpRequest.responseText;//获取到json字符串，还需解析
-                    console.log(resp);
+                    const respTxt = httpRequest.responseText;
+                    const resp = JSON.parse(respTxt);
                     if (resp.status === 0) {
+                        console.log(resp.result.formatted_address);
                         document.getElementsByClassName("geo-info")[0].innerText = resp.result.formatted_address;
                     }
                 }
