@@ -27,6 +27,8 @@
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {
                     const respTxt = httpRequest.responseText;
                     const resp = JSON.parse(respTxt);
+
+document.getElementsByClassName("geo-info")[0].innerText = resp;
                     if (resp.status === 0) {
                         console.log(resp.result.formatted_address);
                         document.getElementsByClassName("geo-info")[0].innerText = resp.result.formatted_address;
