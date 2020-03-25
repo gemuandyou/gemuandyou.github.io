@@ -20,7 +20,7 @@
             const crd = pos.coords;
             console.log(crd);
 
-ocument.getElementsByClassName("geo-info")[0].innerText = crd;
+document.getElementsByClassName("geo-info")[0].innerText = crd;
             baiduGeoUrl = baiduGeoUrl.replace('{latitude}', crd.latitude).replace('{longitude}', crd.longitude);
             const httpRequest = new XMLHttpRequest();
             httpRequest.open('GET', baiduGeoUrl, true);
