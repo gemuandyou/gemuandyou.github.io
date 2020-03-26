@@ -19,8 +19,7 @@
         function success(pos) {
             const crd = pos.coords;
             console.log(crd);
-
-document.getElementsByClassName("geo-info")[0].innerText = crd;
+            document.getElementsByClassName("geo-info")[0].innerText = JSON.stringify(crd);
             baiduGeoUrl = baiduGeoUrl.replace('{latitude}', crd.latitude).replace('{longitude}', crd.longitude);
             const httpRequest = new XMLHttpRequest();
             httpRequest.open('GET', baiduGeoUrl, true);
@@ -29,8 +28,7 @@ document.getElementsByClassName("geo-info")[0].innerText = crd;
                 if (httpRequest.readyState == 4 && httpRequest.status == 200) {
                     const respTxt = httpRequest.responseText;
                     document.getElementsByClassName("geo-info")[0].innerText = respTxt; 
-const resp = JSON.parse(respTxt);
-
+                    const resp = JSON.parse(respTxt);
                     if (resp.status === 0) {
                         console.log(resp.result.formatted_address);
                         document.getElementsByClassName("geo-info")[0].innerText = resp.result.formatted_address;
