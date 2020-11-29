@@ -38,7 +38,7 @@ class Controller
         };
 
         let offer = ragfair_f.controller.offerCache[body.item_id];
-        if (offer.items.length > 0) {
+        if (offer && offer.items && offer.items.length > 0) {
             let remainCount = offer.items[0].upd.StackObjectsCount - body.count;
             offer.items[0].upd.StackObjectsCount = remainCount > 0 ? remainCount : 0;
         }
