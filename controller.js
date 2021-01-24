@@ -218,7 +218,7 @@ class Controller
                 
                 let stackCount = offerBase.items[0].upd.StackObjectsCount;
                 stackCount = this.offerCount < 0 ? stackCount : (this.offerCount < stackCount ? this.offerCount : stackCount);
-                offerBase.items[0].upd.StackObjectsCount = parseInt(Math.ceil(stackCount * (this.isBullet ? parseInt(Math.random() * 20) + 10 : 1) * Math.random() * multiple));
+                offerBase.items[0].upd.StackObjectsCount = parseInt(Math.ceil(stackCount * (this.isBullet ? parseInt(Math.random() * 20) + 10 : 1) * multiple));
                 
                 this.offerCache[offerId] = offerBase;
                 
