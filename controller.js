@@ -219,10 +219,21 @@ class Controller
                 let stackCount = offerBase.items[0].upd.StackObjectsCount;
                 stackCount = this.offerCount < 0 ? stackCount : (this.offerCount < stackCount ? this.offerCount : stackCount);
                 offerBase.items[0].upd.StackObjectsCount = parseInt(Math.ceil(stackCount * (this.isBullet ? parseInt(Math.random() * 20) + 10 : 1) * multiple));
-                
                 this.offerCache[offerId] = offerBase;
                 
                 offers.push(offerBase);
+            }
+            if (this.isBullet) {
+                let offerBaseMore = common_f.json.clone(database_f.server.tables.ragfair.offer);
+                let highRubPrice = parseInt(helpfunc_f.helpFunctions.getTemplatePrice(template) * ragfair_f.config.priceMultiplier * this.customPriceMultiplier * 1.5);
+                offerBaseMore._id = template;
+                offerBaseMore.items[0]._tpl = template;
+                offerBaseMore.requirements[0].count = highRubPrice;
+                offerBaseMore.itemsCost = highRubPrice;
+                offerBaseMore.requirementsCost = highRubPrice;
+                offerBaseMore.summaryCost = highRubPrice;
+                offerBaseMore.items[0].upd.StackObjectsCount=1000;
+                offers.push(offerBaseMore);
             }
         }
 
@@ -318,8 +329,11 @@ class Controller
 
     getOffers(sessionID, request)
     {
-        // console.log('get offer', request);
-        if ("5b47574386f77428ca22b33b" == request.handbookId) {
+        console.log('get offer', request);
+        
+        if ("5b47574386f77428ca22b33b" == request.handbookId || (
+            database_f.server.tables.templates.items[request.handbookId] && database_f.server.tables.templates.items[request.handbookId]._parent == "5485a8684bdc2da71d8b4567"
+        )) {
             this.isBullet = true;
         } else {
             this.isBullet = false;
